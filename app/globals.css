@@ -20,8 +20,9 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  /* background: var(--background);
+  color: var(--foreground); */
+  background: #fff;
 
   font-family: var(--font-sans);
 }
