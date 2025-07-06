@@ -55,6 +55,7 @@ export const Header = () => {
             fontSize: '3.5rem',
             fontWeight: 'bold',
             marginBottom: '1rem',
+            lineHeight: '4rem',
           }}
         >
           Harry Amadi Foundation
