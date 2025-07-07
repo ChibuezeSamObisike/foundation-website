@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
         className='relative z-10 w-full max-w-[1159px] mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between gap-6'
       >
         <div className='w-full md:w-1/2 text-white'>
-          <h1 className='text-4xl text-[#e26d39] md:text-5xl lg:text-6xl font-bold mb-4'>
+          <h1 className='text-4xl text-[#e26d39] md:text-5xl text-center md:text-left lg:text-6xl font-bold mb-4'>
             <span className='text-[#71B663]'>Harry Amadi </span>Foundation
           </h1>
           <p
@@ -121,7 +121,7 @@ export const Header: React.FC = () => {
         <div className='w-[1/4] mx-auto md:w-1/2'>
           <StackedImages
             items={data}
-            size={isSmallScreen ? 450 : 500}
+            size={isSmallScreen ? 350 : 500}
             spreadAngle={15}
           />
         </div>
