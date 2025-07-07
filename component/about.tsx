@@ -4,7 +4,7 @@ import Image from 'next/image';
 export const About = () => {
   return (
     <section
-      style={{ margin: '50px 0px', padding: '50px' }}
+      style={{ margin: '50px 0px', padding: '20px' }}
       className='px-4 mx-auto flex items-center justify-center'
     >
       <div className='mt-5 max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12'>

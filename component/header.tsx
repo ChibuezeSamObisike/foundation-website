@@ -26,12 +26,7 @@ const data = [
     gradient:
       'linear-gradient(to top left, rgba(0, 0, 0, 0.6), rgba(255,255,255,0.3))',
   },
-  {
-    src: '/harry-child.jpeg',
-    logoSrc: '/hamrex-logo.png',
-    gradient:
-      'linear-gradient(to top left, rgba(0, 0, 0, 0.6), rgba(255,255,255,0.3))',
-  },
+
   {
     src: '/harry-child.jpeg',
     logoSrc: '/hamrex-logo.png',
@@ -100,7 +95,7 @@ export const Header: React.FC = () => {
 
       {/* Content */}
       <div
-        style={{ padding: '50px', gap: '40px' }}
+        style={{ padding: '30px', gap: '40px' }}
         className='relative z-10 w-full max-w-[1159px] mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between gap-6'
       >
         <div className='w-full md:w-1/2 text-white'>
