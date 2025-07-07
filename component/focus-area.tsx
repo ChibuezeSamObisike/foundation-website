@@ -72,6 +72,7 @@ const ListSection = ({ title, items }: any) => (
             fontWeight: 'bold',
             marginBottom: '2rem',
             color: '#333',
+            textAlign: 'center',
           }}
         >
           {title}
