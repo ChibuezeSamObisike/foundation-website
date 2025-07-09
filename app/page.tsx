@@ -8,7 +8,7 @@ import './globals.css';
 import { Header } from '@/component/header';
 import ProjectCarousel from '@/component/carousel';
 import { Navbar } from '@/component/nav';
-import { EventSponsorshipModal } from '@/component/form';
+// import { EventSponsorshipModal } from '@/component/form';
 
 const sections = {
   about: `Harry Excellent Amadi is not just a name, he is a movement. A man with an uncommon passion for people and a deep burden to rewrite stories that were once labeled “hopeless.” Born with nothing but a dream and relentless faith, Harry rose from humble beginnings to build a global-impact brand — Hamrex and Growmie Group, with subsidiaries spanning real estate, tech, education, media, construction, and philanthropy.
