@@ -79,6 +79,7 @@ export const Header: React.FC = () => {
       className='relative h-[100vh] flex items-center justify-center bg-center bg-cover'
       style={{
         backgroundImage: `url("https://growmieuniversity.com/wp-content/uploads/2025/06/07.png")`,
+        marginTop: isSmallScreen ? '90px' : '0px',
       }}
     >
       {/* Overlay */}
@@ -111,7 +112,8 @@ export const Header: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '8px',
-              marginTop: '20px',
+              margin: '0px auto',
+              marginTop: '30px',
             }}
           >
             Sponsor us

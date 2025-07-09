@@ -82,7 +82,8 @@ export const Navbar: React.FC = () => {
                   key={link}
                   href={`#${link.replace(/\s+/g, '').toLowerCase()}`}
                   onClick={() => setIsOpen(false)}
-                  className='text-[rgb(191, 191, 198)] font-medium hover:text-[rgb(191, 191, 198)] transition'
+                  className='text-[#676b70] font-medium hover:text-[rgb(191, 191, 198)] transition'
+                  style={{ padding: '2px 10px' }}
                 >
                   {link}
                 </a>
