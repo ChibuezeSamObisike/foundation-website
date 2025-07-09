@@ -84,7 +84,7 @@ const ImageSection = ({
 const HomePage = () => {
   return (
     <>
-      <EventSponsorshipModal />
+      {/* <EventSponsorshipModal /> */}
       <div>
         <Navbar />
         <Header />
