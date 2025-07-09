@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { About } from '@/component/about';
 import { FocusArea } from '@/component/focus-area';
@@ -6,6 +7,8 @@ import Image from 'next/image';
 import './globals.css';
 import { Header } from '@/component/header';
 import ProjectCarousel from '@/component/carousel';
+import { Navbar } from '@/component/nav';
+import { EventSponsorshipModal } from '@/component/form';
 
 const sections = {
   about: `Harry Excellent Amadi is not just a name, he is a movement. A man with an uncommon passion for people and a deep burden to rewrite stories that were once labeled “hopeless.” Born with nothing but a dream and relentless faith, Harry rose from humble beginnings to build a global-impact brand — Hamrex and Growmie Group, with subsidiaries spanning real estate, tech, education, media, construction, and philanthropy.
@@ -80,42 +83,46 @@ const ImageSection = ({
 
 const HomePage = () => {
   return (
-    <div>
-      <Header />
-      <About />
-      <div
-        style={{ margin: '10px auto' }}
-        className='flex flex-col md:flex-row items-start justify-between max-w-6xl mx-auto'
-      >
-        <ImageSection image='/mission.jpeg' title='Mission Statement'>
-          {sections.mission}
-        </ImageSection>
-        <ImageSection image='/vision.jpeg' title='Vision Statement'>
-          {sections.vision}
-        </ImageSection>
+    <>
+      <EventSponsorshipModal />
+      <div>
+        <Navbar />
+        <Header />
+        <About />
+        <div
+          style={{ margin: '10px auto' }}
+          className='flex flex-col md:flex-row items-start justify-between max-w-6xl mx-auto'
+        >
+          <ImageSection image='/mission.jpeg' title='Mission Statement'>
+            {sections.mission}
+          </ImageSection>
+          <ImageSection image='/vision.jpeg' title='Vision Statement'>
+            {sections.vision}
+          </ImageSection>
+        </div>
+
+        <FocusArea />
+
+        <ProjectCarousel />
+
+        <footer
+          style={{
+            padding: '2rem',
+            textAlign: 'center',
+            backgroundColor: '#0c2c0c',
+            color: '#fff',
+          }}
+        >
+          <p>
+            &copy; {new Date().getFullYear()} Harry Excellent Amadi Foundation.
+            All rights reserved.
+          </p>
+          <p style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>
+            {sections.slogan}
+          </p>
+        </footer>
       </div>
-
-      <FocusArea />
-
-      <ProjectCarousel />
-
-      <footer
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          backgroundColor: '#0c2c0c',
-          color: '#fff',
-        }}
-      >
-        <p>
-          &copy; {new Date().getFullYear()} Harry Excellent Amadi Foundation.
-          All rights reserved.
-        </p>
-        <p style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>
-          {sections.slogan}
-        </p>
-      </footer>
-    </div>
+    </>
   );
 };
 

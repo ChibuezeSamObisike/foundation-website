@@ -1,17 +1,8 @@
 'use client';
 import React from 'react';
 
-import Image from 'next/image';
 import { StackedImages } from '@/component/stacked-images';
 import { useResponsive } from '@/hook/use-screen';
-
-const sections = {
-  vision: `To build a world where no dream dies in silence, no child goes to bed hungry, and no purpose is buried by poverty. A world where young people rise with clarity, courage, and capacity to transform their lives and the lives of others because someone believed in them.`,
-
-  mission: `To restore dignity and hope by feeding the hungry, housing the homeless, supporting widows and struggling families, funding purpose-driven youths, and empowering small businesses one life at a time.`,
-
-  slogan: `Feeding Hope. Funding Dreams.`,
-};
 
 const data = [
   {
@@ -138,7 +129,6 @@ export interface ImgItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const ImgItem: React.FC<ImgItemProps> = ({
   src,
-  logoSrc,
   gradient = 'linear-gradient(to bottom right, rgba(153, 81, 0, 0.95), rgba(0, 51, 0, 0.92))',
   size = 500,
   style,
