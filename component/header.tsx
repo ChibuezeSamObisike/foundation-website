@@ -102,6 +102,20 @@ export const Header: React.FC = () => {
             people rise with clarity, courage, and capacity to transform their
             lives and the lives of others because someone believed in them.
           </p>
+          <button
+            style={{
+              backgroundColor: '#e26d39',
+              color: '#fff',
+              padding: '8px 16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '8px',
+              marginTop: '20px',
+            }}
+          >
+            Sponsor us
+          </button>
         </div>
 
         <div className='w-[1/4] mx-auto md:w-1/2'>

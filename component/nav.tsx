@@ -35,12 +35,12 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Desktop Nav */}
-        <div className='hidden md:flex gap-8 font-medium'>
+        <div className='hidden md:flex items-center gap-8 font-medium'>
           {navLinks.map((link) => (
             <a
               key={link}
               href={`#${link.replace(/\s+/g, '').toLowerCase()}`}
-              className='group relative text-[rgb(191,191,198)] transition'
+              className='group relative text-gray-500 transition'
             >
               {link}
               <span className='absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-[rgb(191,191,198)] transition-transform duration-300 group-hover:scale-x-100' />
@@ -50,9 +50,14 @@ export const Navbar: React.FC = () => {
             style={{
               backgroundColor: '#e26d39',
               color: '#fff',
+              padding: '8px 16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '8px',
             }}
           >
-            sponsor us
+            Sponsor us
           </button>
         </div>
 
