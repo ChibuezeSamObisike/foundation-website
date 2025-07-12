@@ -3,6 +3,9 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useResponsive } from '@/hook/use-screen';
 
+const APPS_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbxdDgVWv8LvQL_zsye-ere2C13YZrzhXtfet2yYaQ4AUISFjH3zdligX7m9pysqA7p8bA/exec';
+
 interface EventSponsorshipModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -64,7 +67,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
   };
 
   const sectionStyle: React.CSSProperties = {
-    marginBottom: 20,
+    marginBottom: 40,
   };
 
   const labelStyle: React.CSSProperties = {
@@ -78,23 +81,27 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
     padding: 8,
     marginBottom: 12,
     boxSizing: 'border-box',
-    border: '1px solid grey',
+    border: '1px solid #d3d3d3',
     borderRadius: '8px',
   };
 
   const checkboxContainer: React.CSSProperties = {
-    display: 'flex',
-    flexWrap: 'wrap',
+    // display: 'flex',
+    // flexWrap: 'wrap',
     gap: 10,
     marginBottom: 12,
   };
 
   const buttonStyle: React.CSSProperties = {
-    padding: '10px 20px',
-    backgroundColor: '#017EFF',
+    backgroundColor: '#e26d39',
     color: '#fff',
-    border: 'none',
-    borderRadius: 4,
+    padding: '8px 16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '8px',
+    margin: '0px auto',
+    marginTop: '30px',
     cursor: 'pointer',
   };
 
@@ -111,8 +118,9 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     const formData = {
       eventName,
       eventTheme,
@@ -137,8 +145,27 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
       proposalLink,
       additionalComments,
     };
-    console.log('Form submitted:', formData);
-    onClose();
+
+    try {
+      // 2️⃣ POST JSON to your Apps Script endpoint
+      const res = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const payload = await res.json();
+      if (payload.result === 'success') {
+        console.log('Submitted successfully!');
+        onClose();
+      } else {
+        console.error('Submission failed:', payload);
+      }
+    } catch (err) {
+      console.error('Network or script error:', err);
+    }
   };
 
   return (
@@ -171,10 +198,11 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
         <form onSubmit={handleSubmit}>
           {/* Section A */}
           <div style={sectionStyle}>
-            <h3>SECTION A: EVENT DETAIL</h3>
+            <h3 style={{ marginBottom: '20px' }}>SECTION A: EVENT DETAIL</h3>
             <label style={labelStyle}>1. Event Name:</label>
             <input
               style={inputStyle}
+              placeholder='Name of event, e.g growmie launch'
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
               required
@@ -184,6 +212,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
             <input
               style={inputStyle}
               value={eventTheme}
+              placeholder='How to sell real estate'
               onChange={(e) => setEventTheme(e.target.value)}
             />
 
@@ -225,6 +254,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               type='date'
               style={inputStyle}
               value={eventDate}
+              defaultValue={new Date().getDate()}
               onChange={(e) => setEventDate(e.target.value)}
             />
 
@@ -239,6 +269,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
             <label style={labelStyle}>6. Venue (Include Address & City):</label>
             <textarea
               style={{ ...inputStyle, height: 60 }}
+              placeholder='Hamrex HQ'
               value={venue}
               onChange={(e) => setVenue(e.target.value)}
             />
@@ -249,6 +280,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
             <input
               style={inputStyle}
               value={targetAudience}
+              placeholder='Youths, Church'
               onChange={(e) => setTargetAudience(e.target.value)}
             />
 
@@ -257,13 +289,16 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               type='number'
               style={inputStyle}
               value={numAttendees}
+              placeholder='100'
               onChange={(e) => setNumAttendees(e.target.value)}
             />
           </div>
 
           {/* Section B */}
           <div style={sectionStyle}>
-            <h3>SECTION B: ORGANIZER INFORMATION</h3>
+            <h3 style={{ marginBottom: '30px' }}>
+              SECTION B: ORGANIZER INFORMATION
+            </h3>
             <label style={labelStyle}>
               9. Name of Organization or Event Host:
             </label>
@@ -271,24 +306,28 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               style={inputStyle}
               value={organizerName}
               onChange={(e) => setOrganizerName(e.target.value)}
+              placeholder='Group, Team, School'
             />
             <label style={labelStyle}>10. Contact Person Name:</label>
             <input
               style={inputStyle}
               value={contactPerson}
               onChange={(e) => setContactPerson(e.target.value)}
+              placeholder='Hamrex PA'
             />
             <label style={labelStyle}>11. Phone Number & WhatsApp:</label>
             <input
               style={inputStyle}
               value={phoneWhatsApp}
               onChange={(e) => setPhoneWhatsApp(e.target.value)}
+              placeholder='012394938'
             />
             <label style={labelStyle}>12. Email Address:</label>
             <input
               style={inputStyle}
               type='email'
               value={email}
+              placeholder='sam@hamrex.com'
               onChange={(e) => setEmail(e.target.value)}
             />
             <label style={labelStyle}>
@@ -318,7 +357,9 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
 
           {/* Section C */}
           <div style={sectionStyle}>
-            <h3>SECTION C: EVENT IMPACT & PURPOSE</h3>
+            <h3 style={{ marginBottom: '30px' }}>
+              SECTION C: EVENT IMPACT & PURPOSE
+            </h3>
             <label style={labelStyle}>
               15. What is the core objective of the event?
             </label>
@@ -347,7 +388,9 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
 
           {/* Section D */}
           <div style={sectionStyle}>
-            <h3>SECTION D: SPONSORSHIP & VISIBILITY</h3>
+            <h3 style={{ marginBottom: '30px' }}>
+              SECTION D: SPONSORSHIP & VISIBILITY
+            </h3>
             <label style={labelStyle}>
               20. What kind of support are you requesting from the Foundation?
             </label>
@@ -390,7 +433,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
 
           {/* Section E */}
           <div style={sectionStyle}>
-            <h3>SECTION E: ADDITIONAL NOTE</h3>
+            <h3 style={{ marginBottom: '30px' }}>SECTION E: ADDITIONAL NOTE</h3>
             <label style={labelStyle}>
               21. Please attach or link your official event
               proposal/flyer/poster:
@@ -412,11 +455,24 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
             />
           </div>
 
-          <div style={{ textAlign: 'right' }}>
+          <div
+            style={{
+              textAlign: 'right',
+              display: 'flex',
+              justifyContent: 'flex-start',
+              width: '40%',
+            }}
+          >
             <button
               type='button'
               onClick={onClose}
-              style={{ ...buttonStyle, marginRight: 10 }}
+              style={{
+                ...buttonStyle,
+                marginRight: 10,
+                background: 'transparent',
+                border: '1px solid #e26d39',
+                color: '#e26d39',
+              }}
             >
               Cancel
             </button>

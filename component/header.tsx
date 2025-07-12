@@ -72,7 +72,7 @@ const data = [
 //   );
 // };
 
-export const Header: React.FC = () => {
+export const Header = ({ openAppModal }: { openAppModal: () => void }) => {
   const { isSmallScreen } = useResponsive();
   return (
     <div
@@ -103,21 +103,34 @@ export const Header: React.FC = () => {
             people rise with clarity, courage, and capacity to transform their
             lives and the lives of others because someone believed in them.
           </p>
-          <button
+          <div
             style={{
-              backgroundColor: '#e26d39',
-              color: '#fff',
-              padding: '8px 16px',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '8px',
-              margin: '0px auto',
+              justifyContent: isSmallScreen ? 'center' : 'flex-start',
+              alignItems: isSmallScreen ? 'center' : 'flex-start',
+              width: '100%',
               marginTop: '30px',
             }}
           >
-            Sponsor us
-          </button>
+            <button
+              type='button'
+              style={{
+                backgroundColor: '#e26d39',
+                color: '#fff',
+                padding: '8px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                width: '40%',
+                border: 'none',
+              }}
+              onClick={openAppModal}
+            >
+              Sponsor us
+            </button>
+          </div>
         </div>
 
         <div className='w-[1/4] mx-auto md:w-1/2'>

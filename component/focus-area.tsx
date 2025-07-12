@@ -62,8 +62,8 @@ const focusAreas = [
   },
 ];
 
-const ListSection = ({ title, items }: any) => (
-  <section style={{ padding: '4rem 1.5rem' }}>
+const ListSection = ({ title, items, id }: any) => (
+  <section id={id} style={{ padding: '4rem 1.5rem' }}>
     <div className='max-w-6xl mx-auto px-4' style={{ margin: '0 auto' }}>
       {title && (
         <h2
@@ -124,5 +124,5 @@ const ListSection = ({ title, items }: any) => (
 );
 
 export const FocusArea = () => {
-  return <ListSection title='Core focus areas' items={focusAreas} />;
+  return <ListSection title='Core focus areas' items={focusAreas} id='focus' />;
 };

@@ -7,7 +7,7 @@ import { useResponsive } from '@/hook/use-screen';
 
 const navLinks = ['About', 'Focus', 'Projects'];
 
-export const Navbar: React.FC = () => {
+export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -55,7 +55,9 @@ export const Navbar: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '8px',
+              cursor: 'pointer',
             }}
+            onClick={openAppModal}
           >
             Sponsor us
           </button>

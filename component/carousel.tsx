@@ -85,6 +85,7 @@ export default function ProjectGrid() {
     <section
       style={{ margin: 'auto', marginBottom: '50px', padding: '4rem 1.5rem' }}
       className='py-16 px-4 '
+      id='projects'
     >
       <div className='max-w-6xl mx-auto' style={{ margin: 'auto' }}>
         <h2

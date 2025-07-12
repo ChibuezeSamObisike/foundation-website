@@ -18,7 +18,7 @@ export const About = () => {
           />
         </div>
 
-        <div className='max-w-2xl m-10 text-center md:text-left'>
+        <div id='about' className='max-w-2xl m-10 text-center md:text-left'>
           <h2
             style={{ marginBottom: 6 }}
             className='text-4xl font-bold text-gray-800 mb-10'

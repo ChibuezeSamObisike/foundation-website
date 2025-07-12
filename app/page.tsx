@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { About } from '@/component/about';
 import { FocusArea } from '@/component/focus-area';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Image from 'next/image';
 import './globals.css';
 import { Header } from '@/component/header';
 import ProjectCarousel from '@/component/carousel';
 import { Navbar } from '@/component/nav';
+import { EventSponsorshipModal } from '@/component/form';
 // import { EventSponsorshipModal } from '@/component/form';
 
 const sections = {
@@ -82,12 +83,26 @@ const ImageSection = ({
 );
 
 const HomePage = () => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      {/* <EventSponsorshipModal /> */}
+      <EventSponsorshipModal
+        isOpen={openModal}
+        onClose={() => {
+          setOpenModal(false);
+        }}
+      />
       <div>
-        <Navbar />
-        <Header />
+        <Navbar
+          openAppModal={() => {
+            setOpenModal(true);
+          }}
+        />
+        <Header
+          openAppModal={() => {
+            setOpenModal(true);
+          }}
+        />
         <About />
         <div
           style={{ margin: '10px auto' }}
