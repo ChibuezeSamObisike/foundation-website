@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useResponsive } from "@/hook/use-screen";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/config/firebase";
 import {
   modalStyle,
   containerStyle,
@@ -17,50 +18,54 @@ import {
   eventSponsorshipSchema,
   EventSponsorshipFormData,
 } from "../schema/form";
+import toast from "react-hot-toast";
 
 interface EventSponsorshipModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const COLLECTION = "event_sponsorship_applications";
+
 export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
     control,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
   } = useForm<EventSponsorshipFormData>({
     resolver: yupResolver(eventSponsorshipSchema),
-    // defaultValues: {
-    //   eventName: "",
-    //   eventTheme: "",
-    //   eventTypes: [],
-    //   otherEventType: "",
-    //   eventDate: undefined,
-    //   eventTime: "",
-    //   venue: "",
-    //   targetAudience: "",
-    //   numAttendees: 0,
-    //   organizerName: "",
-    //   contactPerson: "",
-    //   phoneWhatsApp: "",
-    //   email: "",
-    //   socialMedia: "",
-    //   organizedBefore: "no",
-    //   previousEvents: "",
-    //   coreObjective: "",
-    //   impact: "",
-    //   speakers: "",
-    //   supportRequested: [],
-    //   otherSupport: "",
-    //   proposalLink: "",
-    //   additionalComments: "",
-    // },
+    defaultValues: {
+      eventName: "",
+      eventTheme: "",
+      eventTypes: [],
+      otherEventType: "",
+      eventDate: undefined,
+      eventTime: "",
+      venue: "",
+      targetAudience: "",
+      numAttendees: 0,
+      organizerName: "",
+      contactPerson: "",
+      phoneWhatsApp: "",
+      email: "",
+      socialMedia: "",
+      organizedBefore: "no",
+      previousEvents: "",
+      coreObjective: "",
+      impact: "",
+      speakers: "",
+      supportRequested: [],
+      otherSupport: "",
+      proposalLink: "",
+      additionalComments: "",
+    },
   });
 
   const watchEventTypes = watch("eventTypes");
@@ -69,11 +74,24 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
 
   if (!isOpen) return null;
 
-  const onSubmit = (data: EventSponsorshipFormData) => {
-    console.log("Form Data:", data);
-    // Here you can process the form data
-    reset(); // Reset form after successful submission
-    onClose(); // Close modal
+  const onSubmit = async (data: EventSponsorshipFormData) => {
+    setIsSubmitting(true);
+    try {
+      const docRef = await addDoc(collection(db, COLLECTION), {
+        ...data,
+        submittedAt: serverTimestamp(),
+        status: "pending",
+      });
+      console.log("Document written with ID: ", docRef.id);
+      toast.success("Application submitted successfully!");
+      onClose();
+      reset();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      toast.error("Failed to submit application. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const errorStyle: React.CSSProperties = {
@@ -447,7 +465,7 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               textAlign: "right",
               display: "flex",
               justifyContent: "flex-start",
-              width: "40%",
+              width: "50%",
             }}
           >
             <button
@@ -467,12 +485,12 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               type="submit"
               style={{
                 ...buttonStyle,
-                opacity: isSubmitting ? 0.7 : 1,
+                opacity: isSubmitting ? 0.6 : 1,
                 cursor: isSubmitting ? "not-allowed" : "pointer",
               }}
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? "Submitting..." : "Submit Application"}
             </button>
           </div>
         </form>

@@ -14,7 +14,7 @@ export const modalStyle: React.CSSProperties = {
 export const containerStyle: React.CSSProperties = {
   backgroundColor: "#fff",
   borderRadius: 8,
-  width: window.matchMedia("(max-width: 768px)").matches ? "90%" : 600,
+  width: "min(600px, 90vw)", 
   maxHeight: "90vh",
   overflowY: "auto",
   padding: 20,
@@ -41,8 +41,6 @@ export const inputStyle: React.CSSProperties = {
 };
 
 export const checkboxContainer: React.CSSProperties = {
-  // display: 'flex',
-  // flexWrap: 'wrap',
   gap: 10,
   marginBottom: 12,
 };
