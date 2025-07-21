@@ -41,31 +41,6 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
     reset,
   } = useForm<EventSponsorshipFormData>({
     resolver: yupResolver(eventSponsorshipSchema),
-    defaultValues: {
-      eventName: "",
-      eventTheme: "",
-      eventTypes: [],
-      otherEventType: "",
-      eventDate: undefined,
-      eventTime: "",
-      venue: "",
-      targetAudience: "",
-      numAttendees: 0,
-      organizerName: "",
-      contactPerson: "",
-      phoneWhatsApp: "",
-      email: "",
-      socialMedia: "",
-      organizedBefore: "no",
-      previousEvents: "",
-      coreObjective: "",
-      impact: "",
-      speakers: "",
-      supportRequested: [],
-      otherSupport: "",
-      proposalLink: "",
-      additionalComments: "",
-    },
   });
 
   const watchEventTypes = watch("eventTypes");
