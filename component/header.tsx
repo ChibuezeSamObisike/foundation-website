@@ -155,7 +155,7 @@ export const Header = ({ openAppModal }: { openAppModal: () => void }) => {
               }}
               onClick={toggleDropdown}
             >
-              Sponsor us
+Apply for help
             </button>
             <AnimatePresence>
               {isDropdownOpen && (
