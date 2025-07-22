@@ -90,7 +90,7 @@ export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
               }}
               onClick={toggleDropdown}
             >
-              Sponsor us
+        Apply for help
               <ChevronDown
                 size={16}
                 className={`transition-transform duration-200 ${
