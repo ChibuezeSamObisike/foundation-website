@@ -69,11 +69,6 @@ const projects = [
     description: 'Turning dreams into reality through small grants.',
   },
   {
-    title: 'Community Light-Up Project',
-    image: 'https://images.pexels.com/photos/935951/pexels-photo-935951.jpeg',
-    description: 'Powering rural communities with light and hope.',
-  },
-  {
     title: 'Back-to-School Kit Drive',
     image: 'https://images.pexels.com/photos/3992949/pexels-photo-3992949.jpeg',
     description: 'Giving children tools for academic success.',
