@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 const impactStats = [
   "Food relief",
@@ -285,28 +284,6 @@ export const Header = ({
           </div>
         </div>
 
-        <div className="hero-media float-gently">
-          <div className="hero-media__frame">
-            <div className="absolute -inset-5 rounded-[2rem] bg-[#df6f3a]/10 blur-2xl" />
-            <div className="hero-photo-card">
-              <Image
-                src="/harry-child.jpeg"
-                alt="Harry Amadi Foundation outreach with school children"
-                width={720}
-                height={840}
-                className="hero-photo"
-                priority
-              />
-              <div className="hero-impact-note">
-                <strong>Impact that feels personal</strong>
-                <span>
-                  Feeding hope through practical outreach, education support,
-                  and hands-on community care.
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
