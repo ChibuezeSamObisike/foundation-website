@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { About } from '@/component/about';
 import { FocusArea } from '@/component/focus-area';
 import React, { ReactNode, useState } from 'react';
@@ -8,7 +7,7 @@ import './globals.css';
 import { Header } from '@/component/header';
 import ProjectCarousel from '@/component/carousel';
 import { Navbar } from '@/component/nav';
-import { EventSponsorshipModal } from '@/component/form';
+import { EventSponsorshipModal, SpeakerEngagementModal } from '@/component/form';
 // import { EventSponsorshipModal } from '@/component/form';
 
 const sections = {
@@ -84,6 +83,7 @@ const ImageSection = ({
 
 const HomePage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [openSpeakerModal, setOpenSpeakerModal] = useState(false);
   return (
     <>
       <EventSponsorshipModal
@@ -92,15 +92,27 @@ const HomePage = () => {
           setOpenModal(false);
         }}
       />
+      <SpeakerEngagementModal
+        isOpen={openSpeakerModal}
+        onClose={() => {
+          setOpenSpeakerModal(false);
+        }}
+      />
       <div>
         <Navbar
           openAppModal={() => {
             setOpenModal(true);
           }}
+          openSpeakerModal={() => {
+            setOpenSpeakerModal(true);
+          }}
         />
         <Header
           openAppModal={() => {
             setOpenModal(true);
+          }}
+          openSpeakerModal={() => {
+            setOpenSpeakerModal(true);
           }}
         />
         <About />

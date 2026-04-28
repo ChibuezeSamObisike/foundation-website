@@ -36,6 +36,24 @@ export interface EventSponsorshipFormData {
   additionalComments?: string | null;
 }
 
+export interface SpeakerEngagementFormData {
+  organisationName: string;
+  contactPerson: string;
+  phoneNumber: string;
+  email: string;
+  eventTitle: string;
+  eventTypes: string[];
+  otherEventType?: string | null;
+  eventDate: Date;
+  eventTime: string;
+  eventVenue: string;
+  speakingRoles: string[];
+  topicFocusArea: string;
+  expectedAudience: string;
+  sessionObjectives: string;
+  additionalInformation?: string | null;
+}
+
 export const eventSponsorshipSchema: yup.ObjectSchema<EventSponsorshipFormData> =
   yup.object().shape({
     // Section A: Event Details
@@ -196,4 +214,99 @@ export const eventSponsorshipSchema: yup.ObjectSchema<EventSponsorshipFormData> 
       .string()
       .notRequired()
       .max(1000, "Additional comments must not exceed 1000 characters"),
+  });
+
+export const speakerEngagementSchema: yup.ObjectSchema<SpeakerEngagementFormData> =
+  yup.object().shape({
+    organisationName: yup
+      .string()
+      .required("Organisation name is required")
+      .min(2, "Organisation name must be at least 2 characters")
+      .max(100, "Organisation name must not exceed 100 characters"),
+
+    contactPerson: yup
+      .string()
+      .required("Contact person is required")
+      .min(2, "Contact person must be at least 2 characters")
+      .max(50, "Contact person must not exceed 50 characters"),
+
+    phoneNumber: yup
+      .string()
+      .required("Phone number is required")
+      .matches(
+        /^[\+]?[0-9\s\-\(\)]{10,15}$/,
+        "Please enter a valid phone number"
+      ),
+
+    email: yup
+      .string()
+      .email("Please enter a valid email address")
+      .required("Email address is required")
+      .max(100, "Email address must not exceed 100 characters"),
+
+    eventTitle: yup
+      .string()
+      .required("Event title is required")
+      .min(3, "Event title must be at least 3 characters")
+      .max(150, "Event title must not exceed 150 characters"),
+
+    eventTypes: yup
+      .array()
+      .of(yup.string().required())
+      .min(1, "Please select at least one event type")
+      .required("Event type is required"),
+
+    otherEventType: yup.string().when("eventTypes", {
+      is: (eventTypes: string[]) => eventTypes?.includes("Other"),
+      then: (schema) => schema.required("Please specify the other event type"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+
+    eventDate: yup
+      .date()
+      .min(new Date(), "Event date cannot be in the past")
+      .required("Event date is required"),
+
+    eventTime: yup
+      .string()
+      .matches(
+        /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
+        "Please enter a valid time format (HH:MM)"
+      )
+      .required("Event time is required"),
+
+    eventVenue: yup
+      .string()
+      .required("Event venue is required")
+      .min(3, "Please provide the event venue")
+      .max(300, "Event venue must not exceed 300 characters"),
+
+    speakingRoles: yup
+      .array()
+      .of(yup.string().required())
+      .min(1, "Please select at least one speaking role")
+      .required("Speaking role is required"),
+
+    topicFocusArea: yup
+      .string()
+      .required("Topic/focus area is required")
+      .min(3, "Topic/focus area must be at least 3 characters")
+      .max(200, "Topic/focus area must not exceed 200 characters"),
+
+    expectedAudience: yup
+      .string()
+      .required("Expected audience is required")
+      .min(5, "Please describe the expected audience")
+      .max(300, "Expected audience must not exceed 300 characters"),
+
+    sessionObjectives: yup
+      .string()
+      .required("Session objectives are required")
+      .min(10, "Please provide more details about the session objectives")
+      .max(700, "Session objectives must not exceed 700 characters"),
+
+    additionalInformation: yup
+      .string()
+      .notRequired()
+      .max(1000, "Additional information must not exceed 1000 characters"),
   });

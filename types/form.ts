@@ -37,3 +37,27 @@ export interface EventSponsorshipApplication extends EventSponsorshipFormData {
   submittedAt: Date;
   status: "pending" | "approved" | "rejected";
 }
+
+export interface SpeakerEngagementFormData {
+  organisationName: string;
+  contactPerson: string;
+  phoneNumber: string;
+  email: string;
+  eventTitle: string;
+  eventTypes: string[];
+  otherEventType?: string;
+  eventDate: Date;
+  eventTime: string;
+  eventVenue: string;
+  speakingRoles: string[];
+  topicFocusArea: string;
+  expectedAudience: string;
+  sessionObjectives: string;
+  additionalInformation?: string;
+}
+
+export interface SpeakerEngagementRequest extends SpeakerEngagementFormData {
+  id: string;
+  submittedAt: Date;
+  status: "pending" | "approved" | "rejected";
+}

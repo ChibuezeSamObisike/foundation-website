@@ -7,7 +7,13 @@ import { useResponsive } from "@/hook/use-screen";
 
 const navLinks = ["About", "Focus", "Projects"];
 
-export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
+export const Navbar = ({
+  openAppModal,
+  openSpeakerModal,
+}: {
+  openAppModal: () => void;
+  openSpeakerModal: () => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -33,6 +39,11 @@ export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
 
   const handleEventSponsorship = () => {
     openAppModal();
+    setIsDropdownOpen(false);
+  };
+
+  const handleSpeakerEngagement = () => {
+    openSpeakerModal();
     setIsDropdownOpen(false);
   };
 
@@ -143,6 +154,28 @@ export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
                     }
                   >
                     Event Sponsorship
+                  </button>
+
+                  <button
+                    onClick={handleSpeakerEngagement}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "0.5rem 1rem",
+                      color: "#374151",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      transition: "background-color 0.15s ease-in-out",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#f9fafb")
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                  >
+                    Speaker Engagement
                   </button>
 
                   <button
@@ -289,6 +322,17 @@ export const Navbar = ({ openAppModal }: { openAppModal: () => void }) => {
                         style={{ padding: "4px 10px" }}
                       >
                         Event Sponsorship
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          handleSpeakerEngagement();
+                          setIsOpen(false);
+                        }}
+                        className="block w-full text-left text-sm text-gray-600 hover:text-[rgb(191, 191, 198)] transition"
+                        style={{ padding: "4px 10px" }}
+                      >
+                        Speaker Engagement
                       </button>
 
                       <button

@@ -72,7 +72,13 @@ const data = [
 //   );
 // };
 
-export const Header = ({ openAppModal }: { openAppModal: () => void }) => {
+export const Header = ({
+  openAppModal,
+  openSpeakerModal,
+}: {
+  openAppModal: () => void;
+  openSpeakerModal: () => void;
+}) => {
   const { isSmallScreen } = useResponsive();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
@@ -92,6 +98,11 @@ export const Header = ({ openAppModal }: { openAppModal: () => void }) => {
   }, []);
   const handleEventSponsorship = () => {
     openAppModal();
+    setIsDropdownOpen(false);
+  };
+
+  const handleSpeakerEngagement = () => {
+    openSpeakerModal();
     setIsDropdownOpen(false);
   };
 
@@ -200,6 +211,28 @@ Apply for help
                     }
                   >
                     Event Sponsorship
+                  </button>
+
+                  <button
+                    onClick={handleSpeakerEngagement}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "0.5rem 1rem",
+                      color: "#374151",
+                      backgroundColor: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      transition: "background-color 0.15s ease-in-out",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.currentTarget.style.backgroundColor = "#f9fafb")
+                    }
+                    onMouseOut={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                  >
+                    Speaker Engagement
                   </button>
 
                   <button

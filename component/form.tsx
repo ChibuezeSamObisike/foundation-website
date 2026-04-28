@@ -17,6 +17,8 @@ import {
 import {
   eventSponsorshipSchema,
   EventSponsorshipFormData,
+  speakerEngagementSchema,
+  SpeakerEngagementFormData,
 } from "../schema/form";
 import toast from "react-hot-toast";
 
@@ -26,6 +28,7 @@ interface EventSponsorshipModalProps {
 }
 
 const COLLECTION = "event_sponsorship_applications";
+const SPEAKER_COLLECTION = "speaker_engagement_requests";
 
 export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
   isOpen,
@@ -466,6 +469,288 @@ export const EventSponsorshipModal: React.FC<EventSponsorshipModalProps> = ({
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Submit Application"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export const SpeakerEngagementModal: React.FC<EventSponsorshipModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm<SpeakerEngagementFormData>({
+    resolver: yupResolver(speakerEngagementSchema),
+  });
+
+  const watchEventTypes = watch("eventTypes");
+
+  if (!isOpen) return null;
+
+  const onSubmit = async (data: SpeakerEngagementFormData) => {
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, SPEAKER_COLLECTION), {
+        ...data,
+        submittedAt: serverTimestamp(),
+        status: "pending",
+      });
+      toast.success("Speaker engagement request submitted successfully!");
+      onClose();
+      reset();
+    } catch (error) {
+      console.error("Error adding speaker engagement request: ", error);
+      toast.error("Failed to submit request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const errorStyle: React.CSSProperties = {
+    color: "#ef4444",
+    fontSize: "14px",
+    marginBottom: "8px",
+    marginTop: "-8px",
+  };
+
+  return (
+    <div style={modalStyle} onClick={onClose}>
+      <div style={containerStyle} onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-center">
+          <img
+            src="/hamrex-logo.png"
+            alt="Hamrex Foundation logo"
+            className="w-[100px] rounded-4xl"
+          />
+        </div>
+        <h2
+          style={{
+            marginTop: 0,
+            marginBottom: 20,
+            fontSize: "25px",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          SPEAKER/PANELIST REQUEST FORM
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div style={sectionStyle}>
+            <label style={labelStyle}>1. Organisation Name:</label>
+            <input style={inputStyle} {...register("organisationName")} />
+            {errors.organisationName && (
+              <div style={errorStyle}>{errors.organisationName.message}</div>
+            )}
+
+            <label style={labelStyle}>2. Contact Person:</label>
+            <input style={inputStyle} {...register("contactPerson")} />
+            {errors.contactPerson && (
+              <div style={errorStyle}>{errors.contactPerson.message}</div>
+            )}
+
+            <label style={labelStyle}>3. Phone Number:</label>
+            <input style={inputStyle} {...register("phoneNumber")} />
+            {errors.phoneNumber && (
+              <div style={errorStyle}>{errors.phoneNumber.message}</div>
+            )}
+
+            <label style={labelStyle}>4. Email Address:</label>
+            <input type="email" style={inputStyle} {...register("email")} />
+            {errors.email && (
+              <div style={errorStyle}>{errors.email.message}</div>
+            )}
+
+            <label style={labelStyle}>5. Event Title:</label>
+            <input style={inputStyle} {...register("eventTitle")} />
+            {errors.eventTitle && (
+              <div style={errorStyle}>{errors.eventTitle.message}</div>
+            )}
+
+            <label style={labelStyle}>6. Event Type:</label>
+            <div style={checkboxContainer}>
+              {["Conference", "Seminar", "Workshop", "Panel Session", "Other"].map(
+                (option) => (
+                  <Controller
+                    key={option}
+                    name="eventTypes"
+                    control={control}
+                    render={({ field: { value, onChange } }) => (
+                      <label
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={value?.includes(option) || false}
+                          onChange={(e) => {
+                            const newValue = e.target.checked
+                              ? [...(value || []), option]
+                              : (value || []).filter((item) => item !== option);
+                            onChange(newValue);
+                          }}
+                        />
+                        {option}
+                      </label>
+                    )}
+                  />
+                )
+              )}
+            </div>
+            {errors.eventTypes && (
+              <div style={errorStyle}>{errors.eventTypes.message}</div>
+            )}
+
+            {watchEventTypes?.includes("Other") && (
+              <>
+                <input
+                  style={inputStyle}
+                  placeholder="Specify other event type"
+                  {...register("otherEventType")}
+                />
+                {errors.otherEventType && (
+                  <div style={errorStyle}>{errors.otherEventType.message}</div>
+                )}
+              </>
+            )}
+
+            <label style={labelStyle}>7. Event Date:</label>
+            <input type="date" style={inputStyle} {...register("eventDate")} />
+            {errors.eventDate && (
+              <div style={errorStyle}>{errors.eventDate.message}</div>
+            )}
+
+            <label style={labelStyle}>8. Event Time:</label>
+            <input type="time" style={inputStyle} {...register("eventTime")} />
+            {errors.eventTime && (
+              <div style={errorStyle}>{errors.eventTime.message}</div>
+            )}
+
+            <label style={labelStyle}>
+              9. Event Venue (Physical/Virtual):
+            </label>
+            <textarea
+              style={{ ...inputStyle, height: 60 }}
+              {...register("eventVenue")}
+            />
+            {errors.eventVenue && (
+              <div style={errorStyle}>{errors.eventVenue.message}</div>
+            )}
+
+            <label style={labelStyle}>10. Speaking Role Requested:</label>
+            <div style={checkboxContainer}>
+              {["Keynote Speaker", "Guest Speaker", "Panelist"].map((option) => (
+                <Controller
+                  key={option}
+                  name="speakingRoles"
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <label
+                      style={{ display: "flex", alignItems: "center", gap: 4 }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={value?.includes(option) || false}
+                        onChange={(e) => {
+                          const newValue = e.target.checked
+                            ? [...(value || []), option]
+                            : (value || []).filter((item) => item !== option);
+                          onChange(newValue);
+                        }}
+                      />
+                      {option}
+                    </label>
+                  )}
+                />
+              ))}
+            </div>
+            {errors.speakingRoles && (
+              <div style={errorStyle}>{errors.speakingRoles.message}</div>
+            )}
+
+            <label style={labelStyle}>11. Topic/Focus Area:</label>
+            <input style={inputStyle} {...register("topicFocusArea")} />
+            {errors.topicFocusArea && (
+              <div style={errorStyle}>{errors.topicFocusArea.message}</div>
+            )}
+
+            <label style={labelStyle}>
+              12. Expected Audience (Size & Profile):
+            </label>
+            <textarea
+              style={{ ...inputStyle, height: 60 }}
+              {...register("expectedAudience")}
+            />
+            {errors.expectedAudience && (
+              <div style={errorStyle}>{errors.expectedAudience.message}</div>
+            )}
+
+            <label style={labelStyle}>13. Objectives of the Session:</label>
+            <textarea
+              style={{ ...inputStyle, height: 80 }}
+              {...register("sessionObjectives")}
+            />
+            {errors.sessionObjectives && (
+              <div style={errorStyle}>{errors.sessionObjectives.message}</div>
+            )}
+
+            <label style={labelStyle}>
+              14. Additional Information/Requests:
+            </label>
+            <textarea
+              style={{ ...inputStyle, height: 80 }}
+              {...register("additionalInformation")}
+            />
+            {errors.additionalInformation && (
+              <div style={errorStyle}>
+                {errors.additionalInformation.message}
+              </div>
+            )}
+          </div>
+
+          <div
+            style={{
+              textAlign: "right",
+              display: "flex",
+              justifyContent: "flex-start",
+              width: "50%",
+            }}
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                ...buttonStyle,
+                marginRight: 10,
+                background: "transparent",
+                border: "1px solid #e26d39",
+                color: "#e26d39",
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              style={{
+                ...buttonStyle,
+                opacity: isSubmitting ? 0.6 : 1,
+                cursor: isSubmitting ? "not-allowed" : "pointer",
+              }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit Request"}
             </button>
           </div>
         </form>
