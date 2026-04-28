@@ -1,29 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { StackedImages } from "@/component/stacked-images";
-import { useResponsive } from "@/hook/use-screen";
+import Image from "next/image";
 
-const data = [
-  {
-    src: "/harry-child.jpeg",
-    logoSrc: "/hamrex-logo.png",
-    gradient:
-      "linear-gradient(to top left, rgba(0, 0, 0, 0.6), rgba(255,255,255,0.3))",
-  },
-  {
-    src: "/harry-child.jpeg",
-    logoSrc: "/hamrex-logo.png",
-    gradient:
-      "linear-gradient(to top left, rgba(0, 0, 0, 0.6), rgba(255,255,255,0.3))",
-  },
-
-  {
-    src: "/harry-child.jpeg",
-    logoSrc: "/hamrex-logo.png",
-    gradient:
-      "linear-gradient(to top left, rgba(0, 0, 0, 0.6), rgba(255,255,255,0.3))",
-  },
+const impactStats = [
+  "Food relief",
+  "Education support",
+  "Youth mentorship",
+  "Community care",
 ];
 
 // export const Header: React.FC = () => {
@@ -79,14 +63,16 @@ export const Header = ({
   openAppModal: () => void;
   openSpeakerModal: () => void;
 }) => {
-  const { isSmallScreen } = useResponsive();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
-      if (dropdownRef.current) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -112,61 +98,42 @@ export const Header = ({
   };
   return (
     <div
-      className="relative h-[100vh] flex items-center justify-center bg-center bg-cover"
-      style={{
-        backgroundImage: `url("https://growmieuniversity.com/wp-content/uploads/2025/06/07.png")`,
-        marginTop: isSmallScreen ? "90px" : "0px",
-      }}
+      className="hero-section"
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/50" />
+      <div className="absolute left-[-8rem] top-28 h-80 w-80 rounded-full bg-[#f2b75d]/30 blur-3xl" />
+      <div className="absolute bottom-[-6rem] right-[-5rem] h-96 w-96 rounded-full bg-[#2f6b3b]/18 blur-3xl" />
 
       {/* Content */}
-      <div
-        style={{ padding: "30px", gap: "40px" }}
-        className="relative z-10 w-full max-w-[1159px] mx-auto px-4 flex flex-col-reverse md:flex-row items-center justify-between gap-6"
-      >
-        <div className="w-full md:w-1/2 text-white">
-          <h1 className="text-4xl text-[#e26d39] md:text-5xl text-center md:text-left lg:text-6xl font-bold mb-4">
-            <span className="text-[#71B663]">Harry Amadi </span>Foundation
+      <div className="section-shell hero-shell">
+        <div className="hero-copy">
+          <p className="eyebrow reveal-up">Feeding hope. Funding dreams.</p>
+          <h1 className="hero-title reveal-up delay-1">
+            Harry Amadi <span>Foundation</span>
           </h1>
-          <p
-            style={{ marginTop: "10px" }}
-            className="text-base md:text-lg leading-relaxed text-center md:text-left text-[#676b70]"
-          >
+          <p className="hero-text reveal-up delay-2">
             To build a world where no dream dies in silence, no child goes to
             bed hungry, and no purpose is buried by poverty. A world where young
             people rise with clarity, courage, and capacity to transform their
             lives and the lives of others because someone believed in them.
           </p>
+          <div className="hero-pill-row reveal-up delay-3">
+            {impactStats.map((stat) => (
+              <span key={stat} className="hero-pill">
+                {stat}
+              </span>
+            ))}
+          </div>
           <div
-            style={{
-              display: "flex",
-              justifyContent: isSmallScreen ? "center" : "flex-start",
-              alignItems: isSmallScreen ? "center" : "flex-start",
-              width: "100%",
-              marginTop: "30px",
-            }}
-            className="relative"
+            className="hero-actions reveal-up delay-3"
             ref={dropdownRef}
           >
             <button
               type="button"
-              style={{
-                backgroundColor: "#e26d39",
-                color: "#fff",
-                padding: "8px 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: "8px",
-                cursor: "pointer",
-                width: "40%",
-                border: "none",
-              }}
+              className="primary-pill"
               onClick={toggleDropdown}
             >
-Apply for help
+              Apply for help
             </button>
             <AnimatePresence>
               {isDropdownOpen && (
@@ -188,7 +155,7 @@ Apply for help
                     paddingTop: "0.5rem",
                     paddingBottom: "0.5rem",
                     minWidth: "200px",
-                    zIndex: 50,
+                    zIndex: 1000,
                   }}
                 >
                   <button
@@ -318,12 +285,27 @@ Apply for help
           </div>
         </div>
 
-        <div className="w-[1/4] mx-auto md:w-1/2">
-          <StackedImages
-            items={data}
-            size={isSmallScreen ? 350 : 500}
-            spreadAngle={15}
-          />
+        <div className="hero-media float-gently">
+          <div className="hero-media__frame">
+            <div className="absolute -inset-5 rounded-[2rem] bg-[#df6f3a]/10 blur-2xl" />
+            <div className="hero-photo-card">
+              <Image
+                src="/harry-child.jpeg"
+                alt="Harry Amadi Foundation outreach with school children"
+                width={720}
+                height={840}
+                className="hero-photo"
+                priority
+              />
+              <div className="hero-impact-note">
+                <strong>Impact that feels personal</strong>
+                <span>
+                  Feeding hope through practical outreach, education support,
+                  and hands-on community care.
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -343,57 +325,63 @@ export interface ImgItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const ImgItem: React.FC<ImgItemProps> = ({
   src,
+  logoSrc,
   gradient = "linear-gradient(to bottom right, rgba(153, 81, 0, 0.95), rgba(0, 51, 0, 0.92))",
   size = 500,
   style,
   ...rest
-}) => (
-  <div
-    style={{
-      position: "relative",
-      width: size,
-      height: size,
-      borderRadius: 8,
-      overflow: "hidden",
-      ...style,
-    }}
-    {...rest}
-  >
-    {/* Background image */}
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: `url(${src})`,
-        backgroundSize: "cover",
-        backgroundPosition: "top center",
-        backgroundRepeat: "no-repeat",
-        zIndex: 0,
-      }}
-    />
+}) => {
+  // Keep logoSrc out of DOM props when this legacy image component is used.
+  void logoSrc;
 
-    {/* Gradient overlay */}
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        background: gradient,
-        zIndex: 1,
-      }}
-    />
-
-    {/* Centered logo/content */}
+  return (
     <div
       style={{
         position: "relative",
-        zIndex: 2,
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1rem",
+        width: size,
+        height: size,
+        borderRadius: 8,
+        overflow: "hidden",
+        ...style,
       }}
-    ></div>
-  </div>
-);
+      {...rest}
+    >
+      {/* Background image */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `url(${src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Gradient overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: gradient,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Centered logo/content */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "1rem",
+        }}
+      ></div>
+    </div>
+  );
+};

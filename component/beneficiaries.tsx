@@ -55,22 +55,28 @@ const beneficiaries = [
 
 export default function BeneficiariesSection() {
   return (
-    <section
-      style={{ margin: '20px auto', width: '100%' }}
-      className='py-12 bg-white flex items-center justify-center mx-auto'
-    >
-      <div className='max-w-6xl mx-auto px-4'>
-        <h2 className='text-3xl font-bold text-center mb-20'>Who We Serve</h2>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+    <section className='landing-band'>
+      <div className='section-shell'>
+        <div style={{ maxWidth: 760, margin: '0 auto 48px', textAlign: 'center' }}>
+          <p className='eyebrow'>People first</p>
+          <h2 className='section-title' style={{ marginTop: 16 }}>
+            Who We Serve
+          </h2>
+          <p className='section-copy' style={{ marginTop: 18 }}>
+            Every program starts with people whose needs are real, urgent, and
+            worthy of thoughtful support.
+          </p>
+        </div>
+        <div className='card-grid'>
           {beneficiaries.map((item, index) => (
             <div
               key={index}
-              style={{ padding: '10px' }}
-              className='bg-white rounded-2xl shadow-md p-10 text-center transition hover:shadow-lg'
+              style={{ animationDelay: `${index * 0.06}s` }}
+              className='serve-card soft-card reveal-up'
             >
-              <div className='flex justify-center mb-4'>{item.icon}</div>
-              <h3 className='text-xl font-semibold mb-2'>{item.title}</h3>
-              <p className='text-gray-600 text-sm'>{item.description}</p>
+              <div className='serve-icon'>{item.icon}</div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </div>
           ))}
         </div>

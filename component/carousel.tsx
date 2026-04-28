@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
-// 👇 Your ImageSection component (refactored with Tailwind for style clarity)
 const ImageSection = ({
   title,
   children,
@@ -13,20 +12,25 @@ const ImageSection = ({
   children: ReactNode;
   image: string;
 }) => (
-  <div className='bg-white rounded-xl shadow-sm overflow-hidden flex flex-col'>
+  <article className='project-card soft-card reveal-up'>
     {image && (
-      <div className='relative w-full h-56'>
-        <Image src={image} alt={title} fill className='object-cover' priority />
+      <div className='project-card__image'>
+        <Image
+          src={image}
+          alt={title}
+          fill
+          style={{ objectFit: 'cover' }}
+          priority
+        />
       </div>
     )}
-    <div className='p-10' style={{ padding: '10px' }}>
-      <h3 className='text-xl font-semibold text-gray-800 mb-3'>{title}</h3>
-      <p className='text-gray-600 text-base leading-relaxed'>{children}</p>
+    <div className='project-card__body'>
+      <h3 className='project-card__title'>{title}</h3>
+      <p>{children}</p>
     </div>
-  </div>
+  </article>
 );
 
-// 👇 Project data with image + description
 const projects = [
   {
     title: '1% for Impact Project',
@@ -77,20 +81,20 @@ const projects = [
 
 export default function ProjectGrid() {
   return (
-    <section
-      style={{ margin: 'auto', marginBottom: '50px', padding: '4rem 1.5rem' }}
-      className='py-16 px-4 '
-      id='projects'
-    >
-      <div className='max-w-6xl mx-auto' style={{ margin: 'auto' }}>
-        <h2
-          style={{ marginBottom: '50px' }}
-          className='text-3xl font-bold text-center mb-10'
-        >
-          Ongoing and Planned Projects
-        </h2>
+    <section className='landing-band' id='projects'>
+      <div className='section-shell'>
+        <div style={{ maxWidth: 760, margin: '0 auto 48px', textAlign: 'center' }}>
+          <p className='eyebrow'>Programs in motion</p>
+          <h2 className='section-title' style={{ marginTop: 16 }}>
+            Ongoing and Planned Projects
+          </h2>
+          <p className='section-copy' style={{ marginTop: 18 }}>
+            Practical outreach built for visible relief today and stronger
+            lives tomorrow.
+          </p>
+        </div>
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <div className='card-grid'>
           {projects.map((project, index) => (
             <ImageSection
               key={index}

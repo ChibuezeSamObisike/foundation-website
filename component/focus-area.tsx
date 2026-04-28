@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import {
   FaUtensils,
@@ -62,60 +61,48 @@ const focusAreas = [
   },
 ];
 
-const ListSection = ({ title, items, id }: any) => (
-  <section id={id} style={{ padding: '4rem 1.5rem' }}>
-    <div className='max-w-6xl mx-auto px-4' style={{ margin: '0 auto' }}>
+type FocusAreaItem = {
+  label: string;
+  icon: React.ReactNode;
+  description: string;
+};
+
+const ListSection = ({
+  title,
+  items,
+  id,
+}: {
+  title: string;
+  items: FocusAreaItem[];
+  id: string;
+}) => (
+  <section id={id} className='landing-band'>
+    <div className='section-shell'>
       {title && (
-        <h2
-          style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            marginBottom: '2rem',
-            color: '#333',
-            textAlign: 'center',
-          }}
-        >
-          {title}
-        </h2>
+        <div style={{ maxWidth: 760, margin: '0 auto 48px', textAlign: 'center' }}>
+          <p className='eyebrow'>Where support goes</p>
+          <h2 className='section-title' style={{ marginTop: 16 }}>
+            {title}
+          </h2>
+          <p className='section-copy' style={{ marginTop: 18 }}>
+            Focused programs for the needs that shape a person&apos;s tomorrow:
+            food, shelter, health, mentorship, skills, and sustainable support.
+          </p>
+        </div>
       )}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '1.5rem',
-        }}
-      >
-        {items.map(({ label, icon, description }: any, idx: number) => (
+      <div className='card-grid'>
+        {items.map(({ label, icon, description }, idx) => (
           <div
             key={idx}
-            style={{
-              backgroundColor: '#fff',
-              padding: '1.5rem',
-              borderRadius: '12px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
-              color: '#444',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem',
-            }}
+            className='support-card soft-card reveal-up'
+            style={{ animationDelay: `${idx * 0.05}s` }}
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                color: '#e16d40',
-                fontWeight: 600,
-                fontSize: '1.1rem',
-              }}
-            >
+            <div className='support-icon'>
               {icon}
-              <span>{label}</span>
             </div>
-            <p style={{ fontSize: '0.95rem', color: '#666', lineHeight: 1.6 }}>
-              {description}
-            </p>
+            <h3>{label}</h3>
+            <p>{description}</p>
           </div>
         ))}
       </div>
@@ -124,5 +111,5 @@ const ListSection = ({ title, items, id }: any) => (
 );
 
 export const FocusArea = () => {
-  return <ListSection title='Core focus areas' items={focusAreas} id='focus' />;
+  return <ListSection title='Core Focus Areas' items={focusAreas} id='focus' />;
 };

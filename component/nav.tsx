@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useResponsive } from "@/hook/use-screen";
 
 const navLinks = ["About", "Focus", "Projects"];
 
@@ -16,17 +15,18 @@ export const Navbar = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const { isSmallScreen } = useResponsive();
-
   // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = () => {
-      if (dropdownRef.current) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -53,35 +53,29 @@ export const Navbar = ({
   };
 
   return (
-    <nav
-      className="fixed top-0 left-0 w-full z-50 sm:p-6 md:px-50 mb-20"
-      style={{
-        backgroundColor: "white",
-        color: "rgb(191, 191, 198)",
-      }}
-    >
-      <div
-        style={{ padding: isSmallScreen ? "20px" : "20px 100px" }}
-        className="mx-auto py-10 flex items-center justify-between"
-      >
-        <div className="text-xl font-bold">
+    <nav className="site-nav">
+      <div className="site-nav__inner">
+        <a href="#" className="flex items-center gap-3 text-xl font-bold">
           <img
             src="/hamrex-logo.png"
-            alt="jasper"
-            className="w-[100px] rounded-4xl"
+            alt="Hamrex Foundation logo"
+            className="h-12 w-12 rounded-full object-cover"
           />
-        </div>
+          <span className="hidden text-sm font-bold text-[#14371d] sm:block">
+            Harry Amadi Foundation
+          </span>
+        </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8 font-medium">
+        <div className="hidden md:flex items-center gap-7 font-medium">
           {navLinks.map((link) => (
             <a
               key={link}
               href={`#${link.replace(/\s+/g, "").toLowerCase()}`}
-              className="group relative text-gray-500 transition"
+              className="group relative text-sm text-[#667164] transition hover:text-[#14371d]"
             >
               {link}
-              <span className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-[rgb(191,191,198)] transition-transform duration-300 group-hover:scale-x-100" />
+              <span className="absolute left-0 -bottom-1 h-[1px] w-full origin-left scale-x-0 bg-[#df6f3a] transition-transform duration-300 group-hover:scale-x-100" />
             </a>
           ))}
 
@@ -89,19 +83,20 @@ export const Navbar = ({
           <div className="relative" ref={dropdownRef}>
             <button
               style={{
-                backgroundColor: "#e26d39",
+                background: "linear-gradient(135deg, #df6f3a, #be5526)",
                 color: "#fff",
-                padding: "8px 16px",
+                padding: "10px 18px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: "8px",
+                borderRadius: "999px",
                 cursor: "pointer",
                 gap: "4px",
+                boxShadow: "0 12px 25px rgba(223, 111, 58, 0.25)",
               }}
               onClick={toggleDropdown}
             >
-        Apply for help
+              Apply for help
               <ChevronDown
                 size={16}
                 className={`transition-transform duration-200 ${
@@ -262,7 +257,10 @@ export const Navbar = ({
         </div>
 
         {/* Mobile Menu Button */}
-        <button onClick={toggleMenu} className="md:hidden">
+        <button
+          onClick={toggleMenu}
+          className="rounded-full border border-[#2f6b3b24] p-2 text-[#14371d] md:hidden"
+        >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -274,15 +272,15 @@ export const Navbar = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden shadow"
+            className="mx-4 overflow-hidden rounded-3xl border border-[#2f6b3b24] bg-[#fffdf8] shadow md:hidden"
           >
-            <div className="flex flex-col items-start gap-4 px-6 py-4">
+            <div className="flex flex-col items-start gap-4 px-6 py-5">
               {navLinks.map((link) => (
                 <a
                   key={link}
                   href={`#${link.replace(/\s+/g, "").toLowerCase()}`}
                   onClick={() => setIsOpen(false)}
-                  className="text-[#676b70] font-medium hover:text-[rgb(191, 191, 198)] transition"
+                  className="font-medium text-[#667164] transition hover:text-[#14371d]"
                   style={{ padding: "2px 10px" }}
                 >
                   {link}
@@ -296,7 +294,7 @@ export const Navbar = ({
                   className="flex items-center justify-between w-full text-[#676b70] font-medium hover:text-[rgb(191, 191, 198)] transition"
                   style={{ padding: "2px 10px" }}
                 >
-                  Sponsor Us
+                  Apply for help
                   <ChevronDown
                     size={16}
                     className={`transition-transform duration-200 ${
