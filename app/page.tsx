@@ -20,7 +20,7 @@ With every land sold, every business built, and every stage he stands on he is g
 
 A builder of people. A restorer of hope. A voice for the forgotten. A father to the next generation of dreamers. He is not just working for now — he is building for eternity.`,
 
-  vision: `To build a world where no dream dies in silence, no child goes to bed hungry, and no purpose is buried by poverty. A world where young people rise with clarity, courage, and capacity to transform their lives and the lives of others because someone believed in them.`,
+  vision: `To build a world where no dream dies in silence, no child goes to bed hungry, and no purpose is buried by poverty. `,
 
   mission: `To restore dignity and hope by feeding the hungry, housing the homeless, supporting widows and struggling families, funding purpose-driven youths, and empowering small businesses one life at a time.`,
 
@@ -37,29 +37,29 @@ const ImageSection = ({
   image: string;
 }) => (
   <article className='promise-card soft-card reveal-up'>
-      {image && (
-        <div className='promise-card__image'>
-          <Image
-            src={image}
-            alt={title}
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
-        </div>
-      )}
-
-      <div className='promise-card__body'>
-        <p className='eyebrow' style={{ marginBottom: '0.75rem' }}>
-          Foundation promise
-        </p>
-        <h2 className='promise-card__title'>
-          {title}
-        </h2>
-        <p>
-          {children}
-        </p>
+    {image && (
+      <div className='promise-card__image'>
+        <Image
+          src={image}
+          alt={title}
+          fill
+          style={{ objectFit: 'cover' }}
+          priority
+        />
       </div>
+    )}
+
+    <div className='promise-card__body'>
+      <p className='eyebrow' style={{ marginBottom: '0.75rem' }}>
+        Foundation promise
+      </p>
+      <h2 className='promise-card__title'>
+        {title}
+      </h2>
+      <p>
+        {children}
+      </p>
+    </div>
   </article>
 );
 

@@ -112,9 +112,7 @@ export const Header = ({
           </h1>
           <p className="hero-text reveal-up delay-2">
             To build a world where no dream dies in silence, no child goes to
-            bed hungry, and no purpose is buried by poverty. A world where young
-            people rise with clarity, courage, and capacity to transform their
-            lives and the lives of others because someone believed in them.
+            bed hungry, and no purpose is buried by poverty.
           </p>
           <div className="hero-pill-row reveal-up delay-3">
             {impactStats.map((stat) => (

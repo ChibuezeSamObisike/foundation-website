@@ -14,7 +14,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Harry Excellent Amadi Foundation",
   description:
-    "To build a world where no dream dies in silence, no child goes to bed hungry, and no purpose is buried by poverty. A world where young people rise with clarity, courage, and capacity to transform their lives and the lives of others because someone believed in them.",
+    "To build a world where no dream dies in silence, no child goes to bed hungry, and no purpose is buried by poverty. ",
 };
 
 export default function RootLayout({
